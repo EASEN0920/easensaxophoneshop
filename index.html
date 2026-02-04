@@ -34,15 +34,18 @@
 
     <script type="text/babel">
         // --- 1. 配置與初始化 ---
+        // 已填入您提供的真實 Firebase 配置
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "",
-            authDomain: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
+            apiKey: "AIzaSyCLedFsORsopOzUhtto5kr8WfEnM28Bh8k",
+            authDomain: "tk-saxophone.firebaseapp.com",
+            projectId: "tk-saxophone",
+            storageBucket: "tk-saxophone.firebasestorage.app",
+            messagingSenderId: "64364188077",
+            appId: "1:64364188077:web:774938ea6f09f351c39124",
+            measurementId: "G-VT59B60JMH"
         };
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'tk-sax-default';
+        // 資料庫路徑識別碼，建議使用專案名稱
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'tk-saxophone-web';
 
         if (firebaseConfig.apiKey) {
             firebase.initializeApp(firebaseConfig);
@@ -51,15 +54,12 @@
         const { useState, useEffect, useRef } = React;
 
         // --- 2. 圖示組件橋接器 ---
-        // 解決 CDN 環境下 React 組件存取問題，手動建立圖示包裝
         const LucideIcon = ({ name, size = 24, className = "", ...props }) => {
             const iconRef = useRef(null);
             useEffect(() => {
                 if (window.lucide && iconRef.current) {
-                    // 清空之前的內容
                     iconRef.current.innerHTML = '';
-                    // 建立圖示
-                    const icon = lucide.createIcons({
+                    lucide.createIcons({
                         icons: { [name]: lucide.icons[name] },
                         attrs: { 
                             stroke: 'currentColor', 
@@ -101,12 +101,9 @@
             ];
 
             useEffect(() => {
-                // 如果沒有提供真實 API Key，則使用預設商品
                 if (!firebaseConfig.apiKey) {
-                    setTimeout(() => {
-                        setProducts(defaultProducts);
-                        setLoading(false);
-                    }, 800);
+                    setProducts(defaultProducts);
+                    setLoading(false);
                     return;
                 }
 
@@ -125,6 +122,10 @@
                         setProducts(defaultProducts);
                         setLoading(false);
                     });
+                }).catch(err => {
+                    console.error("Auth error:", err);
+                    setProducts(defaultProducts);
+                    setLoading(false);
                 });
             }, []);
 
@@ -185,7 +186,7 @@
                             <div className="col-span-2">
                                 <div className="flex items-center gap-4 mb-6">
                                    <img src="https://i.imgur.com/H7NWyZP.png" alt="Logo" className="h-8 opacity-90" />
-                                   <span className="text-xl font-bold tracking-widest text-white italic uppercase">TK SAXOPHONE</span>
+                                   <span className="text-xl font-bold tracking-widest text-white italic uppercase text-nowrap">TK SAXOPHONE</span>
                                 </div>
                                 <p className="text-sm leading-relaxed max-w-sm">
                                     八十年，我們只專心做好一件事：製作能與靈魂共鳴的薩克斯風。堅持 100% 台灣製造，守護職人工藝。
@@ -216,9 +217,9 @@
 
         const HomePage = ({ onExplore }) => (
             <div className="animate-fade-in">
-                <section className="relative h-[90vh] flex items-center overflow-hidden">
+                <section className="relative h-[85vh] flex items-center overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src="https://i.imgur.com/3jRKwrH.jpeg" alt="背景" className="w-full h-full object-cover shadow-inner" />
+                        <img src="https://i.imgur.com/3jRKwrH.jpeg" alt="背景" className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-stone-950/40"></div>
                     </div>
                     <div className="relative max-w-7xl mx-auto px-6 w-full text-center md:text-left">
@@ -239,6 +240,7 @@
                     </div>
                 </section>
 
+                {/* 品牌簡介區塊 */}
                 <section className="py-24 bg-white text-left overflow-hidden">
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -268,10 +270,11 @@
                     </div>
                 </section>
 
+                {/* 代言人區塊 */}
                 <section className="py-24 bg-stone-900 text-white overflow-hidden text-left">
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-center mb-20">
-                            <h2 className="text-4xl font-black italic mb-4 tracking-tight">國際演奏家之選</h2>
+                            <h2 className="text-4xl font-black italic mb-4 tracking-tight text-white uppercase">國際演奏家之選</h2>
                             <p className="text-stone-500 text-sm tracking-[0.2em] uppercase italic font-bold">Trusted by World-Class Artists</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -281,7 +284,7 @@
                                 </div>
                                 <div className="absolute inset-x-0 bottom-0 p-10 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent">
                                     <span className="text-[10px] font-black text-amber-500 tracking-[0.4em] uppercase mb-3 block italic">Official Endorser</span>
-                                    <h4 className="text-4xl font-black mb-4 italic">陳嘉俊 (Wilson Chen)</h4>
+                                    <h4 className="text-4xl font-black mb-4 italic text-white">陳嘉俊 (Wilson Chen)</h4>
                                     <p className="text-stone-300 font-light max-w-sm text-sm leading-relaxed">其個人專屬「嘉」Model 系列在全球爵士圈享有盛譽。</p>
                                 </div>
                             </div>
@@ -291,7 +294,7 @@
                                 </div>
                                 <div className="absolute inset-x-0 bottom-0 p-10 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent">
                                     <span className="text-[10px] font-black text-amber-500 tracking-[0.4em] uppercase mb-3 block italic">Saxophone Queen</span>
-                                    <h4 className="text-4xl font-black mb-4 italic">小林香織 (Kaori Kobayashi)</h4>
+                                    <h4 className="text-4xl font-black mb-4 italic text-white">小林香織 (Kaori Kobayashi)</h4>
                                     <p className="text-stone-300 font-light max-w-sm text-sm leading-relaxed">多次巡迴演出指定使用 TK 系列產品，體現美感的完美結合。</p>
                                 </div>
                             </div>
@@ -299,6 +302,7 @@
                     </div>
                 </section>
 
+                {/* 工藝細節 */}
                 <section className="py-24 bg-white">
                     <div className="max-w-7xl mx-auto px-6 text-center mb-16">
                         <h2 className="text-4xl font-black italic mb-2 tracking-tight uppercase">精緻工藝細節</h2>
@@ -324,7 +328,7 @@
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20">
                         <LucideIcon name="Loader2" size={48} className="animate-spin text-amber-500 mb-4" />
-                        <p className="text-stone-400 text-xs font-bold tracking-widest uppercase">載入商品中...</p>
+                        <p className="text-stone-400 text-xs font-bold tracking-widest uppercase">同步雲端資料中...</p>
                     </div>
                 ) : (
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -354,7 +358,7 @@
                     <h2 className="text-5xl font-black italic mb-4 tracking-tight uppercase">T.K. SAXOPHONE</h2>
                     <p className="text-amber-600 font-bold tracking-widest text-lg italic underline underline-offset-8 decoration-amber-500/30">傳承八十載的台灣匠心</p>
                 </div>
-                <div className="prose prose-stone max-w-none space-y-12">
+                <div className="prose prose-stone max-w-none space-y-12 text-left">
                     <div className="bg-white p-10 rounded-[40px] border border-stone-100 shadow-sm text-center">
                         <p className="text-2xl font-light leading-relaxed text-stone-800 italic">
                             「八十年，我們只專心做好一件事：製作能與靈魂共鳴的薩克斯風。」
@@ -374,7 +378,7 @@
         );
 
         const ServicePage = () => (
-            <div className="max-w-4xl mx-auto px-6 py-20 text-center animate-fade-in">
+            <div className="max-w-4xl mx-auto px-6 py-20 text-center animate-fade-in min-h-[60vh]">
                 <LucideIcon name="Shield" size={48} className="mx-auto text-amber-600 mb-6" />
                 <h2 className="text-4xl font-black italic mb-6 uppercase tracking-widest">售後服務與保養</h2>
                 <p className="text-stone-500 mb-10 font-light">為了維持薩克斯風的最佳狀態，我們提供原廠級的專業維修與定期校正服務。</p>
@@ -394,7 +398,7 @@
             const handleSubmit = async (e) => {
                 e.preventDefault();
                 if (!firebaseConfig.apiKey) {
-                    alert("目前為展示模式。要在 GitHub Pages 使用同步功能，請先在程式碼中填寫真實的 Firebase API Key。");
+                    alert("請配置 Firebase API Key。");
                     return;
                 }
                 setIsSubmitting(true);
@@ -406,9 +410,9 @@
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     setForm({ name: '', price: '', img: '', url: '' });
-                    alert("商品已同步上架至雲端！");
+                    alert("商品已同步成功！");
                 } catch (err) {
-                    alert("上架失敗：" + err.message);
+                    alert("操作失敗：" + err.message);
                 } finally {
                     setIsSubmitting(false);
                 }
@@ -426,19 +430,19 @@
                         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8">
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">商品名稱</label>
-                                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" placeholder="例如: TK Legend ALTO SAX" />
+                                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">價格 (數字)</label>
-                                <input required type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" placeholder="72000" />
+                                <input required type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">綠界商品 URL</label>
-                                <input required value={form.url} onChange={e => setForm({...form, url: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" placeholder="https://t27v5glqel.cashier..." />
+                                <input required value={form.url} onChange={e => setForm({...form, url: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">圖片連結 (Imgur)</label>
-                                <input required value={form.img} onChange={e => setForm({...form, img: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" placeholder="https://i.imgur.com/..." />
+                                <input required value={form.img} onChange={e => setForm({...form, img: e.target.value})} className="w-full bg-stone-50 border border-stone-200 p-4 rounded-2xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition" />
                             </div>
                             <button disabled={isSubmitting} className="md:col-span-2 py-5 bg-stone-900 text-white rounded-2xl font-black uppercase text-xs flex justify-center items-center gap-3 hover:bg-amber-600 transition shadow-lg disabled:bg-stone-300">
                                 {isSubmitting ? <LucideIcon name="Loader2" className="animate-spin" size={16} /> : <LucideIcon name="Save" size={16} />} 立即發佈至官網
@@ -449,7 +453,6 @@
             );
         };
 
-        // 渲染應用程式
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
