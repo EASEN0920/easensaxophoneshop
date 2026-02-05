@@ -105,20 +105,20 @@
                 </section>
 
                 {/* 品牌簡介 */}
-                <section className="py-24 bg-white">
+                <section className="py-24 bg-white text-left">
                     <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-                        <div className="space-y-8 text-left">
-                            <h2 className="text-4xl font-black text-stone-900 italic tracking-tight uppercase text-left">品牌簡介</h2>
+                        <div className="space-y-8">
+                            <h2 className="text-4xl font-black text-stone-900 italic tracking-tight uppercase">品牌簡介</h2>
                             <p className="text-amber-600 font-bold tracking-widest text-sm italic border-l-4 border-amber-600 pl-4 uppercase font-black">來自台灣的匠人精神</p>
                             <p className="text-lg text-stone-600 leading-relaxed font-light text-left">
-                                來自台灣的 <span className="font-bold text-stone-900 uppercase">T.K. SAXOPHONE</span>，擁有超過 <span className="font-bold text-amber-700">80 年</span> 的專業製造底蘊。我們將每一把樂器視為「感性」與「創造性」的完美結合。
+                                來自台灣的 <span className="font-bold text-stone-900">T.K. SAXOPHONE</span>，擁有超過 <span className="font-bold text-amber-700">80 年</span> 的專業製造底蘊。我們將每一把樂器視為「感性」與「創造性」的完美結合。
                             </p>
                             <div className="grid grid-cols-2 gap-6 pt-4 text-left">
-                                <div className="space-y-2">
+                                <div className="space-y-2 text-left">
                                     <div className="flex items-center gap-2 text-stone-900 font-bold uppercase text-sm"><LucideIcon name="Hammer" size={18} className="text-amber-600" /> 工藝底蘊</div>
                                     <p className="text-[10px] text-stone-400">跨越三代的製作技術。</p>
                                 </div>
-                                <div className="space-y-2">
+                                <div className="space-y-2 text-left">
                                     <div className="flex items-center gap-2 text-stone-900 font-bold uppercase text-sm"><LucideIcon name="Award" size={18} className="text-amber-600" /> 頂級選材</div>
                                     <p className="text-[10px] text-stone-400">嚴選進口優質黃銅。</p>
                                 </div>
@@ -132,7 +132,7 @@
                 <section className="py-24 bg-stone-900 text-white overflow-hidden text-left">
                     <div className="max-w-7xl mx-auto px-6 text-left">
                         <div className="text-center mb-20">
-                            <h2 className="text-4xl font-black italic mb-4 tracking-tight text-white uppercase text-center">國際演奏家之選</h2>
+                            <h2 className="text-4xl font-black italic mb-4 tracking-tight text-white uppercase">國際演奏家之選</h2>
                             <p className="text-stone-500 text-sm tracking-[0.2em] uppercase italic font-bold text-center">Trusted by World-Class Artists</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
@@ -161,8 +161,8 @@
                 {/* 工藝細節展示區 */}
                 <section className="py-24 bg-white text-center">
                     <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-                        <h2 className="text-4xl font-black italic mb-2 tracking-tight uppercase text-center">精緻工藝細節</h2>
-                        <div className="w-16 h-1 bg-amber-500 mx-auto mt-4 text-center"></div>
+                        <h2 className="text-4xl font-black italic mb-2 tracking-tight uppercase">精緻工藝細節</h2>
+                        <div className="w-16 h-1 bg-amber-500 mx-auto mt-4"></div>
                     </div>
                     <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
                         {[
@@ -180,12 +180,11 @@
             </div>
         );
 
-        // 產品頁：移除價格顯示
         const ProductsPage = ({ products, loading }) => (
             <div className="max-w-7xl mx-auto px-6 py-20 animate-fade-in text-left min-h-[60vh]">
                 <div className="text-center mb-16 text-center">
-                    <h2 className="text-4xl font-black italic mb-4 tracking-tight uppercase text-stone-900 text-center">旗艦系列商品</h2>
-                    <p className="text-stone-400 font-light italic text-center">精湛工藝，為專業演奏家打造。點擊按鈕前往商城查看詳情。</p>
+                    <h2 className="text-4xl font-black italic mb-4 tracking-tight uppercase text-stone-900">旗艦系列商品</h2>
+                    <p className="text-stone-400 font-light italic">官方線上商城。為演奏家量身打造的專業選擇。</p>
                 </div>
                 {loading ? (
                     <div className="text-center py-20"><LucideIcon name="Loader2" className="animate-spin text-amber-500 mx-auto" size={48} /></div>
@@ -197,9 +196,15 @@
                                     <img src={product.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt={product.name} />
                                 </div>
                                 <div className="p-8 flex flex-col flex-1 text-left">
-                                    <h3 className="font-bold text-sm mb-6 h-10 line-clamp-2 uppercase text-left leading-tight text-stone-800">{product.name}</h3>
-                                    <a href={product.url} target="_blank" rel="noopener noreferrer" className="mt-auto w-full py-3 bg-stone-900 text-white rounded-xl text-[10px] font-black tracking-widest uppercase hover:bg-amber-600 transition flex items-center justify-center gap-2 shadow-lg">
-                                        查看詳情 / 購買 <LucideIcon name="ExternalLink" size={14} />
+                                    <h3 className="font-bold text-sm mb-2 h-10 line-clamp-2 uppercase text-left leading-tight">{product.name}</h3>
+                                    {/* 如果價格不為 0 才顯示價格標籤 */}
+                                    {product.price > 0 && (
+                                        <p className="text-amber-700 font-black text-xl mb-6 italic text-left">NT$ {Number(product.price).toLocaleString()}</p>
+                                    )}
+                                    {/* 如果沒價格，加一點墊片空間維持對齊 */}
+                                    {!(product.price > 0) && <div className="h-8 mb-6"></div>}
+                                    <a href={product.url} target="_blank" rel="noopener noreferrer" className="mt-auto w-full py-3 bg-stone-900 text-white rounded-xl text-[10px] font-bold tracking-widest uppercase hover:bg-amber-600 transition flex items-center justify-center gap-2 shadow-lg">
+                                        立即購買 <LucideIcon name="ExternalLink" size={14} />
                                     </a>
                                 </div>
                             </div>
@@ -212,16 +217,16 @@
         const AboutSection = () => (
             <div className="max-w-5xl mx-auto px-6 py-24 animate-fade-in text-left">
                 <div className="text-center mb-16 space-y-4 text-center">
-                    <h2 className="text-5xl font-black italic mb-4 uppercase text-center">T.K. SAXOPHONE</h2>
-                    <p className="text-amber-600 font-bold tracking-widest text-lg italic underline underline-offset-8 decoration-amber-500/30 text-center">傳承八十載的台灣匠心</p>
+                    <h2 className="text-5xl font-black italic mb-4 uppercase">T.K. SAXOPHONE</h2>
+                    <p className="text-amber-600 font-bold tracking-widest text-lg italic underline underline-offset-8 decoration-amber-500/30">傳承八十載的台灣匠心</p>
                 </div>
                 <div className="prose prose-stone max-w-none space-y-12 text-left">
                     <div className="bg-white p-10 rounded-[2.5rem] border border-stone-100 shadow-sm text-center">
-                        <p className="text-2xl font-light italic uppercase leading-relaxed text-center text-stone-800">「八十年，我們只專心做好一件事：製作能與靈魂共鳴的薩克斯風。」</p>
+                        <p className="text-2xl font-light italic uppercase leading-relaxed text-center">「八十年，我們只專心做好一件事：製作能與靈魂共鳴的薩克斯風。」</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-12 items-center mt-12 text-left">
-                        <div className="space-y-6 text-left">
-                            <p className="text-lg leading-relaxed text-left font-light text-stone-600">
+                        <div className="space-y-6 text-left font-light">
+                            <p className="text-lg leading-relaxed text-left">
                                 來自台灣的 <span className="font-bold text-stone-900">T.K. SAXOPHONE</span>，擁有超過 <span className="font-bold text-amber-700">80 年</span> 的專業製造底蘊。我們堅持 100% 台灣製造與銷售，將每一把樂器視為「感性」與「創造性」的完美結合。
                             </p>
                         </div>
@@ -232,13 +237,13 @@
         );
 
         const ServicePage = () => (
-            <div className="max-w-4xl mx-auto px-6 py-20 text-center animate-fade-in text-center">
+            <div className="max-w-4xl mx-auto px-6 py-20 text-center animate-fade-in">
                 <LucideIcon name="Shield" size={48} className="mx-auto text-amber-600 mb-6" />
-                <h2 className="text-4xl font-black italic mb-12 uppercase text-stone-900 text-center">售後服務與保養</h2>
+                <h2 className="text-4xl font-black italic mb-12 uppercase text-stone-900">售後服務與保養</h2>
                 <div className="bg-stone-900 text-white p-12 rounded-[3rem] shadow-2xl relative overflow-hidden max-w-2xl mx-auto text-center">
-                    <p className="text-2xl font-black mb-4 tracking-widest italic underline decoration-amber-500 underline-offset-8 text-center text-white">0911-375938</p>
+                    <p className="text-2xl font-black mb-4 tracking-widest italic underline decoration-amber-500 underline-offset-8 text-center">0911-375938</p>
                     <p className="text-stone-400 font-light mb-12 uppercase text-[10px] font-bold tracking-widest text-center">專人服務：Easen</p>
-                    <button className="px-10 py-4 bg-amber-600 rounded-full font-bold hover:bg-amber-700 transition tracking-widest uppercase text-xs mx-auto shadow-xl">預約專業維修校正</button>
+                    <button className="px-10 py-4 bg-amber-600 rounded-full font-bold hover:bg-amber-700 transition tracking-widest uppercase text-xs mx-auto">預約專業維修校正</button>
                 </div>
             </div>
         );
@@ -263,7 +268,7 @@
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     setForm({ name: '', price: '', img: '', url: '' });
-                    notify("商品同步成功！", "success");
+                    notify("商品同步上架成功！", "success");
                 } catch (err) { 
                     console.error(err);
                     notify("同步失敗，請檢查 API 設定與權限", "error"); 
@@ -273,7 +278,7 @@
 
             return (
                 <div className="max-w-4xl mx-auto px-6 py-20 animate-fade-in text-left min-h-[60vh]">
-                    <div className="flex justify-between items-center mb-10 border-b pb-6 text-left">
+                    <div className="flex justify-between items-center mb-10 border-b pb-6">
                         <h2 className="text-2xl font-black italic uppercase text-stone-900 flex items-center gap-2 text-left">
                             <LucideIcon name="Settings" className="text-amber-600" /> 管理員中心
                         </h2>
@@ -281,25 +286,25 @@
                     </div>
                     
                     <div className="bg-white p-10 rounded-[2.5rem] border shadow-xl mb-12 text-left">
-                        <h3 className="font-bold mb-6 italic border-l-4 border-amber-600 pl-4 text-stone-900 text-left">新增/同步商品</h3>
+                        <h3 className="font-bold mb-6 italic border-l-4 border-amber-600 pl-4 text-stone-900 text-left">同步商品至官網</h3>
                         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8 text-left">
                             <div className="space-y-2 text-left">
                                 <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">商品名稱</label>
-                                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition" />
+                                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition text-left" placeholder="例如: Legend ALTO SAX" />
                             </div>
                             <div className="space-y-2 text-left">
-                                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">售價 (後台紀錄用)</label>
-                                <input required type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition" />
+                                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">售價 (0 則不顯示)</label>
+                                <input required type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition text-left" placeholder="72000" />
                             </div>
                             <div className="space-y-2 md:col-span-2 text-left">
-                                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">綠界科技收銀台 URL</label>
-                                <input required value={form.url} onChange={e => setForm({...form, url: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition" />
+                                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">商品購買連結 (Shopify URL)</label>
+                                <input required value={form.url} onChange={e => setForm({...form, url: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition text-left" placeholder="https://tk-saxophone.myshopify.com/products/..." />
                             </div>
                             <div className="space-y-2 md:col-span-2 text-left">
                                 <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">商品圖片連結</label>
-                                <input required value={form.img} onChange={e => setForm({...form, img: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition" />
+                                <input required value={form.img} onChange={e => setForm({...form, img: e.target.value})} className="w-full bg-stone-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition text-left" placeholder="https://i.imgur.com/..." />
                             </div>
-                            <button disabled={isSubmitting || !isCloudActive} className="md:col-span-2 py-5 bg-stone-900 text-white rounded-2xl font-black uppercase text-xs hover:bg-amber-600 transition shadow-lg disabled:opacity-50 flex justify-center items-center gap-2">
+                            <button disabled={isSubmitting || !isCloudActive} className="md:col-span-2 py-5 bg-stone-900 text-white rounded-2xl font-black uppercase text-xs hover:bg-amber-600 transition shadow-lg disabled:opacity-50 flex justify-center items-center gap-2 text-center">
                                 {isSubmitting ? <LucideIcon name="Loader2" className="animate-spin" size={16} /> : <LucideIcon name="Save" size={16} />}
                                 立即發佈至雲端
                             </button>
@@ -307,15 +312,15 @@
                     </div>
 
                     <div className="space-y-4 text-left">
-                        <h3 className="font-bold mb-6 italic uppercase tracking-widest text-stone-900 text-left">線上商品管理 ({products.length})</h3>
+                        <h3 className="font-bold mb-6 italic uppercase tracking-widest text-stone-900 text-left">線上商品列表 ({products.length})</h3>
                         <div className="grid gap-4 text-left">
                             {products.filter(p => !p.id.startsWith('default-')).map(p => (
-                                <div key={p.id} className="bg-white p-4 rounded-[1.5rem] border border-stone-100 flex items-center justify-between group shadow-sm hover:shadow-md transition text-left">
+                                <div key={p.id} className="bg-white p-4 rounded-[1.5rem] border border-stone-100 flex items-center justify-between group shadow-sm hover:shadow-md transition">
                                     <div className="flex items-center gap-4 text-left">
                                         <img src={p.img} className="w-12 h-12 rounded-xl object-cover bg-stone-50" />
                                         <div className="text-left">
-                                            <h4 className="font-bold text-sm uppercase text-left leading-tight text-stone-800">{p.name}</h4>
-                                            <p className="text-[10px] text-stone-400 font-bold text-left italic">ID: {p.id}</p>
+                                            <h4 className="font-bold text-sm uppercase text-left leading-tight">{p.name}</h4>
+                                            <p className="text-xs text-amber-700 font-black italic text-left">NT$ {Number(p.price).toLocaleString()}</p>
                                         </div>
                                     </div>
                                     <button onClick={() => onDelete(p.id)} className="p-3 text-stone-200 hover:text-red-500 transition-colors">
@@ -338,10 +343,23 @@
             const [loading, setLoading] = useState(true);
             const [statusMsg, setStatusMsg] = useState(null);
             const [isCloudActive, setIsCloudActive] = useState(false);
+            const [user, setUser] = useState(null);
 
             const defaultProducts = [
-                { id: 'default-1', name: 'TK.SAXOPHONE 傳奇中音 ALTO SAX', price: 72000, img: 'https://i.imgur.com/f3sTY2J.jpeg', url: 'https://t27v5glqel.cashier.ecpay.com.tw/product/000000000908931' },
-                { id: 'default-2', name: 'TK.Saxophone 雅柏次中音 Tenor Sax', price: 120000, img: 'https://i.imgur.com/syUBobO.jpeg', url: 'https://t27v5glqel.cashier.ecpay.com.tw/product/000000000908930' }
+                { 
+                    id: 'default-1', 
+                    name: 'TK.SAXOPHONE 傳奇中音薩克斯風 ALTO SAX', 
+                    price: 0, // 設定為 0 以隱藏價格
+                    img: 'https://i.imgur.com/f3sTY2J.jpeg', 
+                    url: 'https://tk-saxophone.myshopify.com/products/tk-saxophone-%E5%82%B3%E5%A5%87%E4%B8%AD%E9%9F%B3%E8%96%A9%E5%85%8B%E6%96%AF%E9%A2%A8-alto-sax%E9%AB%98%E5%96%AE%E5%83%B9%E5%95%86%E5%93%81%E8%AB%8B%E8%87%B3%E6%97%97%E8%89%A6%E5%BA%97%E8%B3%BC%E8%B2%B7?variant=44501185724527' 
+                },
+                { 
+                    id: 'default-2', 
+                    name: 'TK.Saxophone 雅柏次中音薩克斯風 Tenor Sax', 
+                    price: 0, // 設定為 0 以隱藏價格
+                    img: 'https://i.imgur.com/syUBobO.jpeg', 
+                    url: 'https://tk-saxophone.myshopify.com/products/tk-saxophone-%E9%9B%85%E6%9F%8F%E6%AC%A1%E4%B8%AD%E9%9F%B3%E8%96%A9%E5%85%8B%E6%96%AF%E9%A2%A8-tenor-sax?variant=44437857468527' 
+                }
             ];
 
             const notify = (text, type = 'info') => {
@@ -349,6 +367,7 @@
                 setTimeout(() => setStatusMsg(null), 3000);
             };
 
+            // 定義刪除商品函式
             const handleDeleteProduct = async (id) => {
                 if (id.startsWith('default-')) {
                     notify("預設商品不可刪除", "error");
@@ -359,15 +378,18 @@
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('products').doc(id).delete();
                     notify("商品已下架", "success");
                 } catch (err) {
-                    notify("刪除失敗，請檢查權限設定", "error");
+                    notify("刪除失敗，請檢查權限", "error");
                 }
             };
 
+            // Firebase 認證與監聽邏輯
             useEffect(() => {
                 const init = async () => {
                     try {
-                        await firebase.auth().signInAnonymously();
+                        const cred = await firebase.auth().signInAnonymously();
+                        setUser(cred.user);
                         setIsCloudActive(true);
+                        
                         const db = firebase.firestore();
                         const productsRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('products');
                         
@@ -377,11 +399,12 @@
                             setProducts(sortedList.length > 0 ? sortedList : defaultProducts);
                             setLoading(false);
                         }, err => {
+                            console.error("Firestore sync error:", err);
                             setProducts(defaultProducts);
                             setLoading(false);
-                            console.warn("使用預設商品清單運行中...");
                         });
                     } catch (e) {
+                        console.error("Firebase init error:", e);
                         setProducts(defaultProducts);
                         setLoading(false);
                     }
@@ -401,16 +424,16 @@
             };
 
             return (
-                <div className="min-h-screen flex flex-col relative bg-stone-50">
-                    {statusMsg && <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-xl shadow-2xl text-white font-bold text-sm animate-fade-in ${statusMsg.type === 'error' ? 'bg-red-600' : (statusMsg.type === 'success' ? 'bg-green-600' : 'bg-stone-800')}`}>{statusMsg.text}</div>}
+                <div className="min-h-screen flex flex-col relative bg-stone-50 text-left">
+                    {statusMsg && <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-xl shadow-2xl text-white font-bold text-sm animate-fade-in ${statusMsg.type === 'error' ? 'bg-red-600' : (statusMsg.type === 'success' ? 'bg-green-600' : 'bg-stone-800')} text-center`}>{statusMsg.text}</div>}
                     
                     <nav className="fixed w-full z-50 bg-stone-900/95 text-white backdrop-blur-md border-b border-stone-800">
                         <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-                            <div className="flex items-center gap-4 cursor-pointer" onClick={() => setCurrentPage('home')}>
+                            <div className="flex items-center gap-4 cursor-pointer text-left" onClick={() => setCurrentPage('home')}>
                                 <img src="https://i.imgur.com/H7NWyZP.png" alt="TK Logo" className="h-10 w-auto" />
                                 <div className="flex flex-col border-l border-stone-700 pl-4 text-left leading-tight">
-                                    <span className="text-xl font-bold tracking-widest text-amber-500 italic leading-none uppercase">TK SAXOPHONE</span>
-                                    <span className="text-[9px] tracking-[0.2em] text-stone-400 font-bold uppercase mt-1">100% 台灣製造</span>
+                                    <span className="text-xl font-bold tracking-widest text-amber-500 italic leading-none uppercase text-left">TK SAXOPHONE</span>
+                                    <span className="text-[9px] tracking-[0.2em] text-stone-400 font-bold uppercase mt-1 text-left">100% 台灣製造</span>
                                 </div>
                             </div>
                             <div className="hidden md:flex space-x-10 text-xs font-bold tracking-widest uppercase">
@@ -420,9 +443,9 @@
                                 <button onClick={() => setCurrentPage('service')} className={currentPage === 'service' ? 'text-amber-500' : 'hover:text-stone-300 transition'}>售後服務</button>
                             </div>
                             <div className="flex items-center gap-4">
-                                <a href="https://t27v5glqel.cashier.ecpay.com.tw" target="_blank" className="p-2 hover:bg-stone-800 rounded-full transition flex items-center gap-2 text-xs font-bold border border-stone-700">
-                                    <LucideIcon name="ShoppingCart" size={20} className="text-amber-500" />
-                                    <span className="hidden sm:inline uppercase tracking-widest text-white font-black text-[10px]">線上商城</span>
+                                <a href="https://tk-saxophone.myshopify.com/" target="_blank" className="p-2 hover:bg-stone-800 rounded-full transition flex items-center gap-2 text-xs font-bold">
+                                    <LucideIcon name="ShoppingCart" size={22} className="text-amber-500" />
+                                    <span className="hidden sm:inline uppercase tracking-widest text-white">線上商城</span>
                                 </a>
                                 {showAdminIcon && (
                                     <button onClick={() => setCurrentPage('admin')} className="p-2 bg-amber-600 rounded-full text-white shadow-lg animate-pulse">
@@ -436,7 +459,7 @@
                     <main className="pt-20 flex-1">
                         {currentPage === 'home' && <HomePage onExplore={() => setCurrentPage('products')} />}
                         {currentPage === 'about' && <AboutSection />}
-                        {currentPage === 'products' && <ProductsPage products={products} loading={loading} />}
+                        {currentPage === 'products' && <ProductsPage products={products} loading={loading} isCloudActive={isCloudActive} />}
                         {currentPage === 'service' && <ServicePage />}
                         {currentPage === 'admin' && (
                             <AdminPanel 
@@ -455,20 +478,20 @@
                             <div className="col-span-2 text-left leading-relaxed">
                                 <div className="flex items-center gap-4 mb-6">
                                     <img src="https://i.imgur.com/H7NWyZP.png" alt="Logo" className="h-8 opacity-90" />
-                                    <span className="text-xl font-bold tracking-widest text-white italic uppercase">TK SAXOPHONE</span>
+                                    <span className="text-xl font-bold tracking-widest text-white italic uppercase text-left">TK SAXOPHONE</span>
                                 </div>
-                                <p className="text-sm max-w-sm text-left">八十年，我們只專心做好一件事：製作能與靈魂共鳴的薩克斯風。堅持 100% 台灣製造，守護匠人精神。</p>
+                                <p className="text-sm max-w-sm text-left">八十年，我們只專心做好一件事：製作能與靈魂共鳴的薩克斯風。堅持 100% 台灣製造。</p>
                             </div>
                             <div className="text-left">
                                 <h4 className="text-white font-bold text-sm tracking-widest uppercase mb-6 text-left">聯繫資訊</h4>
                                 <p className="font-bold text-stone-300 italic underline underline-offset-4 mb-4 text-left">0911-375938 Easen</p>
-                                <p className="flex items-start gap-2 text-xs text-left text-stone-500"><LucideIcon name="MapPin" size={14} className="text-amber-500 flex-shrink-0" /> 台中旗艦店</p>
+                                <p className="flex items-start gap-2 text-xs text-left"><LucideIcon name="MapPin" size={14} className="text-amber-500 flex-shrink-0" /> 台中旗艦店</p>
                             </div>
                             <div className="text-left">
                                 <h4 onClick={handleAdminIconOpen} className="text-white font-bold text-sm tracking-widest uppercase mb-6 cursor-default active:text-amber-500 transition-colors text-left">購物保障</h4>
-                                <div className={`flex items-center gap-2 text-[10px] font-bold italic ${isCloudActive ? 'text-green-500' : 'text-stone-700'}`}>
+                                <div className={`flex items-center gap-2 text-[10px] font-bold italic ${isCloudActive ? 'text-green-500' : 'text-stone-700'} text-left`}>
                                     <div className={`w-2 h-2 rounded-full ${isCloudActive ? 'bg-green-500 animate-pulse' : 'bg-stone-800'}`}></div>
-                                    {isCloudActive ? '雲端同步啟動中' : '目前為離線展示模式'}
+                                    {isCloudActive ? '雲端同步啟動中' : '目前為離線模式'}
                                 </div>
                                 <p className="text-[10px] font-bold text-stone-600 uppercase italic mt-4 text-left">© 2024 TK MELODY SAXOPHONE.</p>
                             </div>
