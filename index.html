@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <!-- 核心編碼與基礎 SEO 指令 -->
+    <!-- 核心編碼與基礎 SEO 指令：防止亂碼 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -11,48 +11,17 @@
     <meta name="description" content="TK SAXOPHONE 傳承后里張連昌八十載工藝，專營頂級台製薩克斯風銷售、Alto/Tenor 吹嘴推薦與樂器保養。提供台中薩克斯風教學，由演奏家 Ping 瓶子、涂譯翔、葉嘉淇親自指導。台中一中街旗艦店提供薩克斯風價格諮詢與現場試奏。">
     <meta name="keywords" content="台中薩克斯風, 薩克斯風, 薩克斯風教學, 台製薩克斯風, 張連昌, 后里, TK SAXOPHONE, 薩克斯風價格, 薩克斯風老師, 台中樂器行, Alto Sax, Tenor Sax, 薩克斯風維修, 吹嘴推薦, 后里薩克斯風推薦">
     
-    <!-- 進階爬蟲指令：優化搜尋結果預覽 -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <!-- 進階爬蟲指令 -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <link rel="canonical" href="https://tksaxophone.com/" />
 
-    <!-- Open Graph 分享標籤 (FB / LINE) -->
+    <!-- Open Graph 分享標籤 -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tksaxophone.com/">
     <meta property="og:title" content="TK SAXOPHONE | 台中薩克斯風教學與台製精品工藝">
     <meta property="og:description" content="傳承后里張連昌職人工藝，提供最高品質台製薩克斯風與專業一對一課程。">
     <meta property="og:image" content="https://i.imgur.com/3jRKwrH.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="zh_TW">
 
-    <!-- JSON-LD 結構化資料 -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "MusicStore",
-        "name": "TK SAXOPHONE 台中一中旗艦店",
-        "description": "提供專業台中薩克斯風教學、台製薩克斯風銷售與維修服務，傳承后里張連昌八十載工藝。",
-        "image": "https://i.imgur.com/H7NWyZP.png",
-        "@id": "https://tksaxophone.com/",
-        "url": "https://tksaxophone.com/",
-        "telephone": "+886-911-375938",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "一中街116巷28號",
-          "addressLocality": "台中市北區",
-          "postalCode": "404",
-          "addressCountry": "TW"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 24.1506,
-          "longitude": 120.6853
-        }
-      }
-    ]
-    </script>
-    
     <!-- 外部資源載入 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -76,6 +45,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        // 連結與 API 管理
         const LINE_GENERAL = 'https://lin.ee/F8b9DOB';
         const LINE_LESSONS = 'https://lin.ee/0eYWepl';
         const SHOPIFY_DOMAIN = 'tk-saxophone.myshopify.com';
@@ -93,12 +63,13 @@
             return <i ref={iconRef} style={{ width: size, height: size, display: 'inline-block' }} className={className}></i>;
         };
 
-        const ArtistCard = ({ name, desc, img, tag }) => (
+        // --- 子組件：藝術家卡片 (修復：定義組件) ---
+        const ArtistCard = ({ tag, name, desc, img }) => (
             <div className="relative group bg-stone-800/50 rounded-[40px] overflow-hidden flex flex-col shadow-2xl text-left">
                 <div className="h-[500px] w-full bg-stone-900">
-                    <img src={img} alt={`${name} - TK SAXOPHONE 代言人`} className="w-full h-full object-contain object-bottom transition duration-1000 group-hover:scale-105" />
+                    <img src={img} alt={`${name} - TK SAXOPHONE`} className="w-full h-full object-contain object-bottom transition duration-1000 group-hover:scale-105" />
                 </div>
-                <div className="absolute inset-x-0 bottom-0 p-10 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent text-left">
+                <div className="absolute inset-x-0 bottom-0 p-10 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent">
                     <span className="text-[10px] font-black text-amber-500 tracking-[0.4em] uppercase mb-3 block italic">{tag}</span>
                     <h4 className="text-4xl font-black mb-4 italic text-white">{name}</h4>
                     <p className="text-stone-300 font-light max-w-sm">{desc}</p>
@@ -106,10 +77,11 @@
             </div>
         );
 
+        // --- 子組件：師資卡片 ---
         const TeacherCard = ({ name, title, img, exp, edu, quote }) => (
             <div className="bg-white rounded-[3rem] shadow-xl overflow-hidden border border-stone-100 flex flex-col md:flex-row items-stretch transition hover:shadow-2xl duration-700 text-left">
                 <div className="md:w-1/3 bg-stone-950 flex items-center justify-center overflow-hidden">
-                    <img src={img} className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" alt={`${name} - 台中薩克斯風教學老師`} />
+                    <img src={img} className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" alt={name} />
                 </div>
                 <div className="md:w-2/3 p-8 md:p-12 space-y-8">
                     <div>
@@ -148,7 +120,7 @@
                           }
                         }
                       }
-                      articles(first: 10) {
+                      articles(first: 20) {
                         edges {
                           node {
                             id title handle publishedAt contentHtml
@@ -174,14 +146,19 @@
                                 url: `https://${SHOPIFY_DOMAIN}/products/${edge.node.handle}`,
                                 hidePrice: edge.node.title.includes('傳奇') || edge.node.title.includes('雅柏')
                             })));
-                            setNewsArticles(result.data.articles.edges.map(edge => ({
+
+                            const fetchedArticles = result.data.articles.edges.map(edge => ({
                                 id: edge.node.id,
                                 title: edge.node.title,
+                                rawDate: edge.node.publishedAt,
                                 date: new Date(edge.node.publishedAt).toLocaleDateString('zh-TW'),
                                 excerpt: edge.node.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 100) + '...',
                                 url: `https://${SHOPIFY_DOMAIN}/blogs/${edge.node.blog.handle}/${edge.node.handle}`,
                                 category: edge.node.blog.title
-                            })));
+                            }));
+
+                            fetchedArticles.sort((a, b) => new Date(b.rawDate) - new Date(a.rawDate));
+                            setNewsArticles(fetchedArticles);
                         }
                     } catch (e) { console.error(e); } finally { setLoading(false); setNewsLoading(false); }
                 };
@@ -203,11 +180,11 @@
                                     <img src="https://i.imgur.com/H7NWyZP.png" alt="TK SAXOPHONE Logo" className="h-10 w-auto" />
                                     <div className="flex flex-col border-l border-stone-700 pl-4 leading-tight">
                                         <span className="text-xl font-bold tracking-widest text-amber-500 italic uppercase">TK SAXOPHONE</span>
-                                        <span className="text-[9px] tracking-[0.2em] text-stone-400 font-bold uppercase mt-1">台製薩克斯風 | 后里傳承</span>
+                                        <span className="text-[9px] tracking-[0.2em] text-stone-400 font-bold uppercase mt-1 text-nowrap">台製薩克斯風 | 后里傳承</span>
                                     </div>
                                 </div>
                                 
-                                <div className="hidden lg:flex space-x-8 text-xs font-bold tracking-widest uppercase">
+                                <div className="hidden lg:flex space-x-8 text-xs font-bold tracking-widest uppercase text-left">
                                     <button onClick={() => changePage('home')} className={currentPage === 'home' ? 'text-amber-500 underline decoration-2 underline-offset-8' : 'hover:text-amber-400 transition'}>首頁</button>
                                     <button onClick={() => changePage('news')} className={currentPage === 'news' ? 'text-amber-500 underline decoration-2 underline-offset-8' : 'hover:text-amber-400 transition'}>最新消息</button>
                                     <button onClick={() => changePage('lessons')} className={currentPage === 'lessons' ? 'text-amber-500 underline decoration-2 underline-offset-8' : 'hover:text-amber-400 transition'}>教學課程</button>
@@ -216,7 +193,7 @@
                                     <button onClick={() => changePage('service')} className={currentPage === 'service' ? 'text-amber-500 underline decoration-2 underline-offset-8' : 'hover:text-amber-400 transition'}>售後服務</button>
                                 </div>
 
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 text-left">
                                     <a href={`https://${SHOPIFY_DOMAIN}`} target="_blank" className="hidden md:flex bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-full font-black text-white text-[10px] shadow-lg items-center gap-2">
                                         <LucideIcon name="ShoppingCart" size={16} /> 進入商城
                                     </a>
@@ -273,7 +250,7 @@
                                 </div>
                             </div>
                             <div className="text-left">
-                                <h4 className="text-white font-bold text-sm tracking-widest uppercase mb-6 text-left">顧客服務</h4>
+                                <h4 className="text-white font-bold text-sm tracking-widest uppercase mb-6">顧客服務</h4>
                                 <ul className="space-y-4 text-xs font-light">
                                     <li><button onClick={() => changePage('shipping')} className="hover:text-amber-500 transition">運送政策 Shipping</button></li>
                                     <li><button onClick={() => changePage('return')} className="hover:text-amber-500 transition">退換貨政策 Return</button></li>
@@ -282,7 +259,8 @@
                         </div>
                     </footer>
 
-                    <a href={activeLineLink} target="_blank" rel="noopener noreferrer" className="fixed bottom-8 right-8 z-[100] flex items-center gap-3 bg-[#06C755] text-white px-6 py-4 rounded-full shadow-2xl hover:bg-[#05b34c] transition-all transform hover:scale-10 group pulse-soft">
+                    {/* LINE 懸浮按鈕：根據當前頁面自動切換連結 */}
+                    <a href={activeLineLink} target="_blank" rel="noopener noreferrer" className="fixed bottom-8 right-8 z-[100] flex items-center gap-3 bg-[#06C755] text-white px-6 py-4 rounded-full shadow-2xl hover:bg-[#05b34c] transition-all transform hover:scale-105 group pulse-soft">
                         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.083.922.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975 1.425-1.594 2.547-3.834 2.547-5.968zm-14.587 3.858c0 .428-.347.775-.775.775h-3.136c-.428 0-.775-.347-.775-.775v-6.223c0-.428.347-.775.775-.775s.775.347.775.775v5.448h2.361c.428 0 .775.347.775.775zm3.109 0c0 .428-.347.775-.775.775s-.775-.347-.775-.775v-6.223c0-.428.347-.775.775-.775s.775.347.775.775v6.223zm6.347 0c0 .428-.347.775-.775.775h-3.136c-.428 0-.775-.347-.775-.775v-6.223c0-.428.347-.775.775-.775s.775.347.775.775v5.448h2.361c.428 0 .775.347.775.775zm2.744-2.583c0 .428-.347.775-.775.775h-2.361v.775h2.361c.428 0 .775.347.775.775s-.347.775-.775.775h-3.136c-.428 0-.775-.347-.775-.775v-6.223c0-.428.347-.775.775-.775h3.136c.428 0 .775.347.775.775s-.347.775-.775.775h-2.361v.775h2.361c.428 0 .775.347.775.775z"/></svg>
                         <span className="font-bold tracking-widest text-sm whitespace-nowrap">LINE 即時諮詢</span>
                     </a>
@@ -293,73 +271,72 @@
         const HomePage = ({ onExplore }) => (
             <div className="animate-fade-in text-left">
                 <section className="relative h-[90vh] flex items-center overflow-hidden">
-                    <div className="absolute inset-0">
-                        <img src="https://i.imgur.com/3jRKwrH.jpeg" className="w-full h-full object-cover shadow-2xl" alt="TK SAXOPHONE 台中薩克斯風旗艦店首頁背景" />
+                    <div className="absolute inset-0 text-left">
+                        <img src="https://i.imgur.com/3jRKwrH.jpeg" className="w-full h-full object-cover shadow-2xl" alt="TK SAXOPHONE 台中薩克斯風旗艦店" />
                         <div className="absolute inset-0 bg-stone-950/40"></div>
                     </div>
                     <div className="relative max-w-7xl mx-auto px-6 w-full text-left">
                         <div className="max-w-4xl space-y-8">
-                            <div className="inline-block py-1 px-3 bg-amber-600 text-white text-[10px] font-black tracking-[0.4em] uppercase rounded shadow-lg">Since 1946 Legacy</div>
-                            <h1 className="text-6xl md:text-7xl font-black text-white leading-tight italic drop-shadow-2xl uppercase">TK SAXOPHONE<br/><span className="text-amber-500 text-4xl md:text-6xl block mt-4">台中薩克斯風 | 后里傳承</span></h1>
-                            <p className="text-xl text-stone-100 font-light max-w-2xl leading-relaxed">「100%台製薩克斯風，承襲張連昌大師工藝，為您的音樂注入靈魂。」</p>
-                            <button onClick={onExplore} className="px-10 py-5 bg-amber-600 text-white rounded-full font-black hover:bg-amber-700 transition shadow-2xl uppercase tracking-widest text-xs flex items-center gap-2">查看旗艦產品 <LucideIcon name="ChevronRight" size={18} /></button>
+                            <div className="inline-block py-1 px-3 bg-amber-600 text-white text-[10px] font-black tracking-[0.4em] uppercase rounded shadow-lg text-left">Since 1946 Legacy</div>
+                            <h1 className="text-6xl md:text-7xl font-black text-white leading-tight italic drop-shadow-2xl uppercase text-left">TK SAXOPHONE<br/><span className="text-amber-500 text-4xl md:text-6xl block mt-4 text-left">台中薩克斯風 | 后里傳承</span></h1>
+                            <p className="text-xl text-stone-100 font-light max-w-2xl leading-relaxed text-left">「100%台製薩克斯風，承襲張連昌大師工藝，為您的音樂注入靈魂。」</p>
+                            <button onClick={onExplore} className="px-10 py-5 bg-amber-600 text-white rounded-full font-black hover:bg-amber-700 transition shadow-2xl uppercase tracking-widest text-xs flex items-center gap-2 text-left">查看旗艦產品 <LucideIcon name="ChevronRight" size={18} /></button>
                         </div>
                     </div>
                 </section>
-                <section className="py-24 bg-stone-900 text-white text-left">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="text-center mb-20 text-left md:text-center">
-                            <h2 className="text-4xl font-black italic mb-4 tracking-tight uppercase">國際演奏家之選</h2>
-                            <p className="text-stone-500 text-sm tracking-[0.2em] uppercase italic font-bold">Trusted by World-Class Artists</p>
+                <section className="py-24 bg-stone-900 text-white text-left text-left">
+                    <div className="max-w-7xl mx-auto px-6 text-left">
+                        <div className="text-center mb-20 text-center">
+                            <h2 className="text-4xl font-black italic mb-4 tracking-tight uppercase text-center">國際演奏家之選</h2>
+                            <p className="text-stone-500 text-sm tracking-[0.2em] uppercase italic font-bold text-center">Trusted by World-Class Artists</p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left text-left">
                             <ArtistCard tag="Official Endorser" name="陳嘉俊 (Wilson Chen)" desc="其個人專屬「嘉」Model 系列在全球爵士圈享有盛譽。" img="https://i.imgur.com/QsOg9vX.jpeg" />
                             <ArtistCard tag="Saxophone Queen" name="小林香織 (Kaori Kobayashi)" desc="多次巡迴演出指定使用 TK 系列產品。" img="https://i.imgur.com/MgniwDh.jpeg" />
                         </div>
                     </div>
                 </section>
-                <section className="py-24 bg-white text-center">
+                <section className="py-24 bg-white text-center text-center">
                     <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-                        <h2 className="text-4xl font-black italic mb-2 tracking-tight text-stone-900">精緻工藝細節</h2>
+                        <h2 className="text-4xl font-black italic mb-2 tracking-tight text-stone-900 text-center">精緻工藝細節</h2>
                         <div className="w-16 h-1 bg-amber-500 mx-auto mt-4 text-center"></div>
                     </div>
                     <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 text-center text-center">
                         {["7h8Tm2w", "ub1b35l", "aN0jyY4", "mOrQ8ou"].map((id) => (
-                            <div key={id} className="aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border border-stone-100 group"><img src={`https://i.imgur.com/${id}.jpeg`} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="TK SAXOPHONE 台製薩克斯風精緻工藝細節" /></div>
+                            <div key={id} className="aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border border-stone-100 group text-center text-center"><img src={`https://i.imgur.com/${id}.jpeg`} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 text-center" alt="TK 精緻工藝" /></div>
                         ))}
                     </div>
                 </section>
             </div>
         );
 
-        // --- 最新消息頁面 (Shopify 同步版) ---
         const NewsPage = ({ articles, loading }) => (
-            <div className="max-w-4xl mx-auto px-6 py-24 animate-fade-in text-left min-h-[70vh]">
-                <div className="mb-16 text-center">
-                    <h2 className="text-5xl font-black italic mb-4 text-stone-900 uppercase">最新消息 News</h2>
-                    <p className="text-stone-400 font-light italic">官方部落格即時更新</p>
-                    <div className="w-16 h-1 bg-amber-500 mx-auto mt-6"></div>
+            <div className="max-w-4xl mx-auto px-6 py-24 animate-fade-in text-left min-h-[70vh] text-left">
+                <div className="mb-16 text-center text-center">
+                    <h2 className="text-5xl font-black italic mb-4 text-stone-900 uppercase text-center">最新消息 News</h2>
+                    <p className="text-stone-400 font-light italic text-center">官方部落格即時更新</p>
+                    <div className="w-16 h-1 bg-amber-500 mx-auto mt-6 text-center"></div>
                 </div>
 
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center py-20 text-stone-400">
+                    <div className="flex flex-col items-center justify-center py-20 text-stone-400 text-center">
                         <LucideIcon name="Loader2" className="animate-spin text-amber-500 mb-4" size={48} />
-                        <p className="text-xs font-bold tracking-widest uppercase">正在同步官方部落格...</p>
+                        <p className="text-xs font-bold tracking-widest uppercase text-center">正在同步官方部落格...</p>
                     </div>
                 ) : articles.length === 0 ? (
-                    <p className="text-center text-stone-400 italic">目前尚無最新消息</p>
+                    <p className="text-center text-stone-400 italic text-center">目前尚無最新消息</p>
                 ) : (
-                    <div className="space-y-12">
+                    <div className="space-y-12 text-left text-left">
                         {articles.map(article => (
-                            <div key={article.id} className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-stone-100 flex flex-col gap-6 group hover:shadow-xl transition-all duration-500">
-                                <div className="flex justify-between items-start">
-                                    <div className="flex items-center gap-3">
+                            <div key={article.id} className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-stone-100 flex flex-col gap-6 group hover:shadow-xl transition-all duration-500 text-left">
+                                <div className="flex justify-between items-start text-left text-left text-left">
+                                    <div className="flex items-center gap-3 text-left">
                                         <span className="text-amber-600 font-bold text-sm tracking-widest">{article.date}</span>
                                         <div className="text-[10px] uppercase font-black bg-stone-100 text-stone-500 px-3 py-1 rounded-full">{article.category}</div>
                                     </div>
                                     <LucideIcon name="BookOpen" size={18} className="text-stone-200 group-hover:text-amber-500 transition" />
                                 </div>
-                                <div className="space-y-4">
+                                <div className="space-y-4 text-left text-left">
                                     <h3 className="text-3xl font-bold text-stone-900 leading-tight group-hover:text-amber-600 transition">{article.title}</h3>
                                     <p className="text-stone-500 font-light leading-relaxed">{article.excerpt}</p>
                                 </div>
@@ -369,7 +346,7 @@
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-2 text-stone-900 font-black text-xs uppercase tracking-widest group-hover:gap-4 transition-all"
                                 >
-                                    閱讀完整貼文 <LucideIcon name="ArrowRight" size={14} className="text-amber-600" />
+                                    閱讀完整貼文 <LucideIcon name="ChevronRight" size={14} className="text-amber-600" />
                                 </a>
                             </div>
                         ))}
@@ -379,39 +356,39 @@
         );
 
         const LessonsPage = () => (
-            <div className="max-w-6xl mx-auto px-6 py-24 animate-fade-in text-left">
+            <div className="max-w-6xl mx-auto px-6 py-24 animate-fade-in text-left text-left text-left">
                 <div className="mb-20 text-center">
-                    <h2 className="text-5xl font-black italic mb-4 tracking-tight text-stone-900">台中薩克斯風教學</h2>
+                    <h2 className="text-5xl font-black italic mb-4 tracking-tight text-stone-900 text-center">台中薩克斯風教學</h2>
                     <p className="text-amber-600 font-bold tracking-[0.3em] uppercase italic text-center">Professional Saxophone Academy</p>
-                    <div className="w-20 h-1 bg-amber-500 mx-auto mt-6"></div>
+                    <div className="w-20 h-1 bg-amber-500 mx-auto mt-6 text-center"></div>
                 </div>
                 <div className="grid lg:grid-cols-3 gap-10 items-stretch mb-24 text-left">
-                    <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-stone-100 flex flex-col hover:shadow-xl transition">
+                    <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-stone-100 flex flex-col hover:shadow-xl transition text-left text-left text-left">
                         <LucideIcon name="UserCheck" className="text-amber-600 mb-8" size={32} />
                         <h3 className="text-xl font-bold text-stone-900 mb-6 tracking-widest text-left">一對一極致教學</h3>
                         <p className="text-stone-500 leading-relaxed font-light flex-1 text-left">針對入門初學者、進修學員進行專業指導。調整氣息、嘴型、指法與情感表達，進度事半功倍。</p>
                     </div>
-                    <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-stone-100 flex flex-col hover:shadow-xl transition text-left">
+                    <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-stone-100 flex flex-col hover:shadow-xl transition text-left text-left text-left">
                         <LucideIcon name="MapPin" className="text-amber-600 mb-8" size={32} />
-                        <h3 className="text-xl font-bold text-stone-900 mb-6 tracking-widest text-left">旗艦店專業環境</h3>
-                        <div className="flex-1 text-left">
-                            <p className="text-stone-800 font-bold text-base mb-2">TK SAXOPHONE 台中一中旗艦店</p>
-                            <p className="text-amber-600 font-bold text-sm mb-4 italic uppercase tracking-widest text-left">404臺中市北區一中街116巷28號</p>
+                        <h3 className="text-xl font-bold text-stone-900 mb-6 tracking-widest text-left text-left">旗艦店專業環境</h3>
+                        <div className="flex-1 text-left text-left">
+                            <p className="text-stone-800 font-bold text-base mb-2 text-left">TK SAXOPHONE 台中一中旗艦店</p>
+                            <p className="text-amber-600 font-bold text-sm mb-4 italic uppercase tracking-widest text-left text-left">404臺中市北區一中街116巷28號</p>
                             <p className="text-stone-500 leading-relaxed font-light text-left text-left">在專業隔音空間中學習。現場亦有優質台製樂器與吹嘴可供租借及測試選購。</p>
                         </div>
                     </div>
-                    <div className="bg-stone-900 text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col hover:scale-[1.02] transition text-left">
-                        <LucideIcon name="Music" className="absolute top-0 right-0 p-6 opacity-10" size={150} />
-                        <h3 className="text-xl font-bold text-amber-500 mb-8 tracking-widest uppercase">精選課程方案</h3>
-                        <div className="space-y-10 flex-1 relative z-10 text-left">
-                            <div className="text-left"><h4 className="text-stone-500 uppercase tracking-widest text-[10px] font-black mb-3 text-left">單堂時長 / Duration</h4><p className="text-4xl font-black italic text-left">60 <span className="text-sm font-normal not-italic text-stone-400 text-left text-left text-left">分鐘 / 堂</span></p></div>
-                            <div className="text-left"><h4 className="text-stone-500 uppercase tracking-widest text-[10px] font-black mb-3 text-left">專案費用 / Total Fee</h4><p className="text-6xl font-black text-amber-500 italic leading-none text-left">NT$ 3,200</p><p className="text-[10px] text-stone-400 mt-4 font-bold uppercase tracking-widest text-left">一個月 / 內含 4 堂專業課程</p></div>
+                    <div className="bg-stone-900 text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col hover:scale-[1.02] transition text-left text-left text-left">
+                        <LucideIcon name="Music" className="absolute top-0 right-0 p-6 opacity-10 text-left text-left" size={150} />
+                        <h3 className="text-xl font-bold text-amber-500 mb-8 tracking-widest uppercase text-left text-left">精選課程方案</h3>
+                        <div className="space-y-10 flex-1 relative z-10 text-left text-left">
+                            <div className="text-left text-left"><h4 className="text-stone-500 uppercase tracking-widest text-[10px] font-black mb-3 text-left">單堂時長 / Duration</h4><p className="text-4xl font-black italic text-left">60 <span className="text-sm font-normal not-italic text-stone-400 text-left">分鐘 / 堂</span></p></div>
+                            <div className="text-left text-left"><h4 className="text-stone-500 uppercase tracking-widest text-[10px] font-black mb-3 text-left">專案費用 / Total Fee</h4><p className="text-6xl font-black text-amber-500 italic leading-none text-left">NT$ 3,200</p><p className="text-[10px] text-stone-400 mt-4 font-bold uppercase tracking-widest text-left">一個月 / 內含 4 堂專業課程</p></div>
                         </div>
                         <a href={LINE_LESSONS} target="_blank" className="mt-12 block w-full py-5 bg-amber-600 text-white text-center rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-amber-700 transition shadow-lg text-center text-center">立即預約諮詢</a>
                     </div>
                 </div>
-                <div className="pt-20 border-t border-stone-200 text-left">
-                    <div className="text-center mb-16 text-center text-center"><h3 className="text-3xl font-black italic text-stone-900 mb-4 text-center">頂尖師資</h3><p className="text-stone-400 text-sm font-light italic uppercase tracking-widest text-center text-center">Elite Faculty: Expert Guidance</p></div>
+                <div className="pt-20 border-t border-stone-200 text-left text-left text-left">
+                    <div className="text-center mb-16 text-center text-center"><h3 className="text-3xl font-black italic text-stone-900 mb-4 text-center">頂尖師資</h3><p className="text-stone-400 text-sm font-light italic uppercase tracking-widest text-center text-center text-center">Elite Faculty: Expert Guidance</p></div>
                     <div className="space-y-16 text-left">
                         <TeacherCard name="Ping 瓶子" title="薩克斯風演奏家" img="https://i.imgur.com/uWZgqIt.jpeg" exp="六度受邀請於台中市爵士音樂節演出；第一屆 ACG 音樂大賽全國亞軍。" edu="目前為台中市上安國小音樂班指導老師；十多年教學經驗。" />
                         <TeacherCard name="涂譯翔" title="演奏家 / 爵士樂教育工作者" img="https://i.imgur.com/B28q7If.jpeg" exp="現任台中爵序大樂團團長；活躍於台中爵士音樂節、大型商演。" edu="輔仁大學音樂系爵士演奏主修；MileSpace 創辦人。" quote="「學會吹薩克斯風，不只是學會音階，而是學會用音樂說話。」" />
@@ -422,17 +399,17 @@
         );
 
         const ProductsPage = ({ products, loading }) => (
-            <div className="max-w-7xl mx-auto px-6 py-20 text-left">
-                <div className="text-center mb-16 text-center text-center"><h2 className="text-4xl font-black italic mb-4 tracking-tight text-stone-900 text-center">旗艦產品系列</h2><p className="text-stone-400 font-light italic text-center">台製薩克斯風精品。享受最專業的線上選購體驗。</p></div>
-                {loading ? <div className="flex flex-col items-center justify-center py-24"><LucideIcon name="Loader2" className="animate-spin text-amber-500 mx-auto" size={48} /></div> : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="max-w-7xl mx-auto px-6 py-20 text-left text-left text-left text-left">
+                <div className="text-center mb-16 text-center text-center text-center"><h2 className="text-4xl font-black italic mb-4 tracking-tight text-stone-900 text-center">旗艦產品系列</h2><p className="text-stone-400 font-light italic text-center text-center">台製薩克斯風精品。享受最專業的線上選購體驗。</p></div>
+                {loading ? <div className="flex flex-col items-center justify-center py-24 text-center"><LucideIcon name="Loader2" className="animate-spin text-amber-500 mx-auto" size={48} /></div> : (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-left text-left">
                         {products.map(p => (
                             <div key={p.id} className="bg-white rounded-3xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-xl transition flex flex-col h-full group text-left">
-                                <div className="aspect-square bg-stone-50 overflow-hidden text-left"><img src={p.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 text-left" alt={`${p.name} - 台製薩克斯風`} /></div>
-                                <div className="p-6 flex flex-col flex-1 text-left">
+                                <div className="aspect-square bg-stone-50 overflow-hidden text-left text-left text-left text-left"><img src={p.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 text-left" alt={`${p.name} - 台製薩克斯風`} /></div>
+                                <div className="p-6 flex flex-col flex-1 text-left text-left">
                                     <h3 className="font-bold text-sm mb-2 h-10 line-clamp-2 text-left">{p.name}</h3>
                                     {!p.hidePrice && <p className="text-amber-700 font-black text-xl mb-6 text-left">NT$ {Number(p.price).toLocaleString()}</p>}
-                                    <a href={p.url} target="_blank" className="mt-auto w-full py-3 bg-stone-900 text-white rounded-xl text-[10px] font-black tracking-widest uppercase hover:bg-amber-600 transition flex items-center justify-center gap-2 text-center">立即購買 <LucideIcon name="ExternalLink" size={14} /></a>
+                                    <a href={p.url} target="_blank" className="mt-auto w-full py-3 bg-stone-900 text-white rounded-xl text-[10px] font-black tracking-widest uppercase hover:bg-amber-600 transition flex items-center justify-center gap-2 text-center text-center text-center">立即購買 <LucideIcon name="ExternalLink" size={14} /></a>
                                 </div>
                             </div>
                         ))}
@@ -442,43 +419,43 @@
         );
 
         const AboutSection = () => (
-            <div className="max-w-5xl mx-auto px-6 py-24 animate-fade-in text-left">
+            <div className="max-w-5xl mx-auto px-6 py-24 animate-fade-in text-left text-left text-left">
                 <div className="text-center mb-16 space-y-4 text-center">
                     <h2 className="text-5xl font-black italic mb-4 tracking-tight uppercase text-stone-900 text-center">TK SAXOPHONE</h2>
-                    <p className="text-amber-600 font-bold tracking-widest text-lg italic text-center">傳承后里張連昌八十載匠心</p>
+                    <p className="text-amber-600 font-bold tracking-widest text-lg italic text-center text-center">傳承后里張連昌八十載匠心</p>
                     <div className="w-24 h-1 bg-amber-500 mx-auto mt-4 text-center"></div>
                 </div>
-                <div className="bg-white p-10 md:p-16 rounded-[40px] border border-stone-100 shadow-sm text-left">
+                <div className="bg-white p-10 md:p-16 rounded-[40px] border border-stone-100 shadow-sm text-left text-left text-left">
                     <div className="grid md:grid-cols-3 gap-12 items-center text-left">
-                        <div className="md:col-span-2 space-y-8 text-left">
-                            <p className="text-lg leading-relaxed text-stone-600 font-light text-left">來自台灣薩克斯風之鄉——后里的 <span className="font-bold text-stone-900 underline decoration-amber-500 decoration-2">TK SAXOPHONE</span>，承襲自張連昌大師開創的製琴工藝。</p>
-                            <div className="space-y-4 text-left">
-                                <h4 className="text-xl font-bold text-stone-900 flex items-center gap-2 text-left text-left"><LucideIcon name="History" className="text-amber-600" /> 【工藝傳承】</h4>
-                                <p className="text-sm text-stone-500 font-light leading-relaxed text-left text-left">在后里，金屬敲擊的共鳴聲已交織了八十個春秋。張氏家族堅持台製薩克斯風的品質守護，承載著一甲子的呼吸與傳承。</p>
+                        <div className="md:col-span-2 space-y-8 text-left text-left text-left text-left">
+                            <p className="text-lg leading-relaxed text-stone-600 font-light text-left text-left text-left">來自台灣薩克斯風之鄉——后里的 <span className="font-bold text-stone-900 underline decoration-amber-500 decoration-2">TK SAXOPHONE</span>，承襲自張連昌大師開創的製琴工藝。</p>
+                            <div className="space-y-4 text-left text-left text-left text-left">
+                                <h4 className="text-xl font-bold text-stone-900 flex items-center gap-2 text-left text-left text-left text-left"><LucideIcon name="History" className="text-amber-600" /> 【工藝傳承】</h4>
+                                <p className="text-sm text-stone-500 font-light leading-relaxed text-left text-left text-left text-left">在后里，金屬敲擊的共鳴聲已交織了八十個春秋。張氏家族堅持台製薩克斯風的品質守護，承載著一甲子的呼吸與傳承。</p>
                             </div>
                         </div>
-                        <img src="https://i.imgur.com/ub1b35l.jpeg" className="rounded-3xl shadow-xl w-full object-cover aspect-[3/4] text-left" alt="台製薩克斯風歷史傳承 - 后里張連昌工藝" />
+                        <img src="https://i.imgur.com/ub1b35l.jpeg" className="rounded-3xl shadow-xl w-full object-cover aspect-[3/4] text-left text-left text-left" alt="台製薩克斯風歷史" />
                     </div>
                 </div>
             </div>
         );
 
         const ServicePage = () => (
-            <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-                <LucideIcon name="Shield" size={48} className="mx-auto text-amber-600 mb-6 text-center text-center" />
-                <h2 className="text-4xl font-black italic mb-12 uppercase text-stone-900 text-center text-center text-center">薩克斯風售後維修與保養</h2>
-                <div className="bg-stone-900 text-white p-12 rounded-[40px] shadow-2xl text-center text-center text-center">
-                    <p className="text-2xl font-black mb-4 tracking-widest italic text-center text-center text-center">0911-375938</p>
-                    <p className="text-stone-400 font-light mb-12 uppercase tracking-widest text-[10px] font-bold text-center text-center text-center">專人服務：Easen</p>
-                    <a href={LINE_GENERAL} target="_blank" className="inline-block px-10 py-4 bg-amber-600 rounded-full font-bold hover:bg-amber-700 transition tracking-widest uppercase text-xs text-center text-center text-center">預約專業維修校正</a>
+            <div className="max-w-4xl mx-auto px-6 py-20 text-center text-center text-center">
+                <LucideIcon name="Shield" size={48} className="mx-auto text-amber-600 mb-6 text-center text-center text-center" />
+                <h2 className="text-4xl font-black italic mb-12 uppercase text-stone-900 text-center text-center text-center text-center">薩克斯風售後維修與保養</h2>
+                <div className="bg-stone-900 text-white p-12 rounded-[40px] shadow-2xl text-center text-center text-center text-center text-center">
+                    <p className="text-2xl font-black mb-4 tracking-widest italic text-center text-center text-center text-center">0911-375938</p>
+                    <p className="text-stone-400 font-light mb-12 uppercase tracking-widest text-[10px] font-bold text-center text-center text-center text-center text-center">專人服務：Easen</p>
+                    <a href={LINE_GENERAL} target="_blank" className="inline-block px-10 py-4 bg-amber-600 rounded-full font-bold hover:bg-amber-700 transition tracking-widest uppercase text-xs text-center text-center text-center text-center text-center text-center">預約專業維修校正</a>
                 </div>
             </div>
         );
 
         const PolicyPage = ({ title, content }) => (
-            <div className="max-w-4xl mx-auto px-6 py-24 animate-fade-in text-left">
-                <h2 className="text-3xl font-black mb-12 uppercase italic text-stone-900 border-b pb-6 text-left">{title}</h2>
-                <div className="bg-white p-10 rounded-[2.5rem] shadow-sm text-stone-600 leading-relaxed font-light whitespace-pre-wrap text-left text-left">{content}</div>
+            <div className="max-w-4xl mx-auto px-6 py-24 animate-fade-in text-left text-left text-left text-left text-left text-left text-left text-left text-left">
+                <h2 className="text-3xl font-black mb-12 uppercase italic text-stone-900 border-b pb-6 text-left text-left text-left text-left">{title}</h2>
+                <div className="bg-white p-10 rounded-[2.5rem] shadow-sm text-stone-600 leading-relaxed font-light whitespace-pre-wrap text-left text-left text-left text-left text-left text-left">{content}</div>
             </div>
         );
 
